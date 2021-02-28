@@ -15,16 +15,16 @@ public class MotoParkingCost implements IParkingCost {
 
     @Override
     public long calculateCost(Vehicle veh, LocalDateTime input, LocalDateTime output) {
-        int varEntradaH = input.getHour();  //int del tiempo en horas de la entrada
-        int varEntradaM = input.getMinute();//int del tiempo en minutos de la entrada
-        int varSalidaH = output.getHour();//Int del tiempo en horas de la salida
-        int varSalidaM = output.getMinute();//Int del tiempo en minutos de la salida
+        var inH = input.getHour();  //int del tiempo en horas de la entrada
+        int inM = input.getMinute();//int del tiempo en minutos de la entrada
+        int outH = output.getHour();//Int del tiempo en horas de la salida
+        int outM = output.getMinute();//Int del tiempo en minutos de la salida
         int result, aux;
         double cobroPorMinuto = 8.32;//tiempo estipulado por minuto de cobro 500/60
         
-        if (varSalidaH > varEntradaH){
-            if (varSalidaM >= varEntradaM) {
-                result = (varSalidaH - varEntradaH) * 60 + (varSalidaM - varEntradaM);//calcular coste de minutos adicionales
+        if (outH > inH){
+            if (outM >= inM) {
+                result = (outH - inH) * 60 + (outM - inM);//calcular coste de minutos adicionales
                 if (result <= 60) {
                     return 1000; //si esta por debajo de la tarifa estandar
                 } else {
@@ -38,9 +38,9 @@ public class MotoParkingCost implements IParkingCost {
                     //return (aux * 100) + 1000;     //si no hay que redondear                        
                 }
             } else {
-                varSalidaH = varSalidaH - 1; // si los minutos de salida son menos que lo de entrada
-                varSalidaM = varSalidaM + 60;
-                result = (varSalidaH - varEntradaH) * 60 + (varSalidaM - varEntradaM);
+                outH = outH - 1; // si los minutos de salida son menos que lo de entrada
+                outM = outM + 60;
+                result = (outH - inH) * 60 + (outM - inM);
                 if (result <= 60) {
                     return 1000;
                 } else {
@@ -56,8 +56,8 @@ public class MotoParkingCost implements IParkingCost {
             }
         }
         else{
-            if (varSalidaH == varEntradaH) {
-                if (varSalidaM > varEntradaM) {
+            if (outH == inH) {
+                if (outM > inM) {
                     return 1000;
                 }
             }
