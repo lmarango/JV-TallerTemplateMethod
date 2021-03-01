@@ -24,11 +24,7 @@ public class CarParkingCost implements IParkingCost{
                 }else{
                     int recargo =(int) ((res - 60) * cobroPorMinuto); 
                     double decimal = (double)recargo/100;//redondear el numero a 100
-                    if(decimal - recargo/100 > 0.50)
                         return ((recargo/100)*100)+100+2000; //pasar los numero a enteros y aumentar ceros
-                    else
-                        aux = (int) decimal;
-                        return (aux*100)+2000;     //si no hay que redondear            
                 }
             }else{
                 outH = outH - 1;  // si los minutos de salida son menos que lo de entrada
