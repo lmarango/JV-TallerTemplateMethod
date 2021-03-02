@@ -56,8 +56,8 @@ public class MotoParkingCost implements IParkingCost {
                         return ((recargo / 100) * 100) + 100 + 1000;
                     } else {
                         aux = (int) decimal;
+                        return (aux * 100) + 1000;
                     }
-                    return (aux * 100) + 1000;
                 }
             }
         }
