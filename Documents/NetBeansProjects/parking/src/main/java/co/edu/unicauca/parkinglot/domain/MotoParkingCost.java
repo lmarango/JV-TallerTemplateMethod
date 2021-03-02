@@ -21,7 +21,7 @@ public class MotoParkingCost implements IParkingCost {
      */
     @Override
     public long calculateCost(Vehicle veh, LocalDateTime input, LocalDateTime output) {
-        var inH = input.getHour();  //int del tiempo en horas de la entrada
+        int inH = input.getHour();  //int del tiempo en horas de la entrada
         int inM = input.getMinute();//int del tiempo en minutos de la entrada
         int outH = output.getHour();//Int del tiempo en horas de la salida
         int outM = output.getMinute();//Int del tiempo en minutos de la salida
