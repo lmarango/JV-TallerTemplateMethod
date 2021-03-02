@@ -8,11 +8,17 @@ package co.edu.unicauca.parkinglot.domain;
 import java.time.LocalDateTime;
 
 /**
- *
+ * Clase que implementa la interfaz pública IparkingCost
  * @author Usuario
  */
 public class MotoParkingCost implements IParkingCost {
-
+    /**
+     * Método que reescribe el método de la interfaz para calcular el costo de un vehículo tipo Motocicleta
+     * @param veh Objeto de tipo motocicleta
+     * @param input Tiempo de entrada al parqueadero
+     * @param output Teimpo de salida del parqueadero
+     * @return 
+     */
     @Override
     public long calculateCost(Vehicle veh, LocalDateTime input, LocalDateTime output) {
         var inH = input.getHour();  //int del tiempo en horas de la entrada
@@ -29,7 +35,13 @@ public class MotoParkingCost implements IParkingCost {
                     return 1000; //si esta por debajo de la tarifa estandar
                 } else {
                     int recargo = (int) ((result - 60) * cobroPorMinuto);
-                        return ((recargo / 100) * 100) + 100 + 1000; //pasar los numero a enteros y aumentar ceros
+                    double decimal = (double) recargo / 100;
+                    if (decimal - recargo / 100 > 0) {
+                        return ((recargo / 100) * 100) + 100 + 1000;
+                    } else {
+                        aux = (int) decimal;
+                    }
+                    return (aux * 100) + 1000;
                 }
             } else {
                 outH = outH - 1; // si los minutos de salida son menos que lo de entrada
@@ -40,7 +52,7 @@ public class MotoParkingCost implements IParkingCost {
                 } else {
                     int recargo = (int) ((result - 60) * cobroPorMinuto);
                     double decimal = (double) recargo / 100;
-                    if (decimal - recargo / 100 > 0.50) {
+                    if (decimal - recargo / 100 > 0) {
                         return ((recargo / 100) * 100) + 100 + 1000;
                     } else {
                         aux = (int) decimal;

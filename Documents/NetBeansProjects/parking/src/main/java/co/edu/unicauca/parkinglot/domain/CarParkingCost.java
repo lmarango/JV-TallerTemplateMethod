@@ -3,10 +3,17 @@ package co.edu.unicauca.parkinglot.domain;
 import java.time.LocalDateTime;
 
 /**
- *
+ * Clase que implementa la interfaz pública IParkingCost
  * @author Usuario
  */
 public class CarParkingCost implements IParkingCost{
+    /**
+     * Metodo que reescribe el método de la Interfaz para calcular el costo de Parqueo de u vehhiculo de tipo Carro
+     * @param veh Objeto de tipo vehículo
+     * @param input Tiempo de entrada al parqueadero
+     * @param output Teimpo de salida del parqueadero
+     * @return 
+     */
     @Override
     public long calculateCost(Vehicle veh, LocalDateTime input, LocalDateTime output) {
         int inH = input.getHour();  //Int del tiempo en horas de la entrada
@@ -24,7 +31,13 @@ public class CarParkingCost implements IParkingCost{
                 }else{
                     int recargo =(int) ((res - 60) * cobroPorMinuto); 
                     double decimal = (double)recargo/100;//redondear el numero a 100
+                    if (decimal-recargo/100>0) {
                         return ((recargo/100)*100)+100+2000; //pasar los numero a enteros y aumentar ceros
+                    }
+                    else{
+                        aux = (int) decimal;
+                        return (aux*100)+2000;     //si no hay que redondear 
+                    }
                 }
             }else{
                 outH = outH - 1;  // si los minutos de salida son menos que lo de entrada
@@ -35,17 +48,19 @@ public class CarParkingCost implements IParkingCost{
                 }else{
                     int recargo =(int) ((res - 60)*cobroPorMinuto);
                     double decimal = (double)recargo/100;
-                    if(decimal-recargo/100>0.50)
-                        return ((recargo/100)*100)+100+2000;
-                    else
+                    if (decimal-recargo/100>0) {
+                        return ((recargo/100)*100)+100+2000; //pasar los numero a enteros y aumentar ceros
+                    }
+                    else{
                         aux = (int) decimal;
-                        return (aux*100)+2000;                  
+                        return (aux*100)+2000;     //si no hay que redondear 
+                    }
                 }
             }
             
         }else{
             if(outH == inH ){
-                if(outM > outM){
+                if(outM > inM){
                     return 2000;
                 }
             }

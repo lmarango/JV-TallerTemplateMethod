@@ -4,8 +4,8 @@ import co.edu.unicauca.parkinglot.domain.Vehicle;
 import java.util.List;
 
 /**
- *
- * @author Usuario
+ * Interfaz pública de repositorio de vehículos
+ * @author lmarango
  */
 public interface IVehicleRepository {
     boolean save(Vehicle newVehicle);

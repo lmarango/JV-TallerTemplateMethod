@@ -13,12 +13,25 @@ import java.util.List;
  * @author Usuario
  */
 public class Service {
+    /**
+     * Atributo privado que hará la función de repositorio
+     */
     private IVehicleRepository repository;
-    
+    /**
+     * Constructor parametrizado
+     * @param repository repositorio del servicio
+     */
     public Service(IVehicleRepository repository){
         this.repository = repository;
     }
     
+    /**
+     * Calcula el costo del parqueo
+     * @param veh objeto de tipo vehículo 
+     * @param input hora de entrada del objeto al parqueadero
+     * @param output hora de salida del objeto del parqueadero
+     * @return valor a pagar por parking, -1 si el vehículo es nulo
+     */
     public long calculateParkingCost(Vehicle veh, LocalDateTime input, LocalDateTime output){
         if (veh == null) {
             return -1;
@@ -28,6 +41,11 @@ public class Service {
         return total;
     }
     
+    /**
+     * Método que guarda un vehículo en la base de datos 
+     * @param newVehicle nuevo objeto de tipo Vehiculo que va a serr guardado
+     * @return True si es exitoso el proceso de guardado, false de lo contrario
+     */
     public boolean saveVehicle(Vehicle newVehicle){
         if(newVehicle == null || newVehicle.getPlate().isBlank()){
             return false;
@@ -36,6 +54,10 @@ public class Service {
         return true;
     }
     
+    /**
+     * Método que obtiene la lista de los vehículos de la base de datos
+     * @return Lista de vehículos
+     */
     public List<Vehicle> listVehicles(){
         List<Vehicle> vehicles = new ArrayList<>();
         vehicles = repository.list();

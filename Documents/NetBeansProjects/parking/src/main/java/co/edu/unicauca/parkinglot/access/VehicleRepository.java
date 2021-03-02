@@ -15,8 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Usuario
+ * Repositorio que implementa la interfaz de IVehicleRepository
+ * @author lmarango
  */
 public class VehicleRepository implements IVehicleRepository {
 
@@ -30,9 +30,9 @@ public class VehicleRepository implements IVehicleRepository {
     }
     
     /**
-     * Método publico que retorna el exito o fracaso al guardar un vehículo en la base de datos.
+     * Método publico que guarda un vehículo en la base de datos.
      * @param newVehicle Nuevo objeto de tipo vehículo que se almacenará.
-     * @return True si guardó correctamente el nuevo vehículo, False de lo contrario.
+     * @return True si el vehículo se guardó con éxito, False de lo contrario.
      */
     @Override
     public boolean save(Vehicle newVehicle) {
@@ -53,7 +53,10 @@ public class VehicleRepository implements IVehicleRepository {
         }
         return false;
     }
-
+    /**
+     * Método que recupera la lista de vehículos de la base de datos
+     * @return Lista de vehículos
+     */
     @Override
     public List<Vehicle> list() {
         List<Vehicle> vehicles = new ArrayList<>();
@@ -75,7 +78,9 @@ public class VehicleRepository implements IVehicleRepository {
         }
         return vehicles;
     }
-    
+    /**
+     * Metodo que inicia la base de datos, crea la tabla de no existir 
+     */
     private void initDatabase() {
 
         // SQL statement for creating a new table
@@ -99,8 +104,6 @@ public class VehicleRepository implements IVehicleRepository {
      * Método que se encarga de realizar la conexión a la base de datos
      */
     public void connect() {
-        //SQLite connection string
-        //String url = "jdbc:sqlite:./mydatabase.db";
         String url = "jdbc:sqlite::memory:";
 
         try {

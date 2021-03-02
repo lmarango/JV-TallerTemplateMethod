@@ -8,60 +8,65 @@ package co.edu.unicauca.parkinglot.domain;
 import java.time.LocalDateTime;
 
 /**
- *
- * @author Usuario
+ * Clase que implementa la interfaz pública IparkingCost
+ * @author javierda
  */
 public class TruckParkingCost implements IParkingCost{
-
+    /**
+     * Método que reescribe el método de la interfaz para calcular el costo de parqueo de un vehículo tipo camión
+     * @param veh objeto vehículo de tipo camión
+     * @param input Tiempo de entrada al paqueadero
+     * @param output Tiempo de salida del parqueadero
+     * @return 
+     */
     @Override
     public long calculateCost(Vehicle veh, LocalDateTime input, LocalDateTime output) {
-        int inH = input.getHour();//Hora de entrada
-        int inM = input.getMinute();//Minutos de entrada
-        int inD = input.getDayOfYear();//Dias de entrada
-        int outH = output.getHour();//Hora de entrada
-        int outM = output.getMinute();//Minutos de entrada
-        int outD = output.getDayOfYear();//Dias de entrada
-        int result;
-        double cobroPorMinuto = 16.67;
+        int inD = input.getDayOfYear(); //int variable que guarda el día del parámetro input
+        int inH = input.getHour();  //int variable que guarda la hora del parámetro input
+        int inM = input.getMinute();//int variable que guarda los minutos del parámetro input
+        int outH = output.getHour();//int variable que guarda la hora de parámetro output
+        int outM = output.getMinute();//int variable que guarda los minutos del parámetro output
+        int outD = output.getDayOfYear(); //int variable que guarda el día del parámetro output
+        int varDaysSave = outD - inD; // Dias que estuvo guardado el vehiculo
+        int varHoursSave = outH - inH; //horas que estuvo guardado el vehiculo
+        int varMinutesSave = outM - outM; // minutos que estuvo guardado el vehiculo
+        int costXHora = 625; // valor del parqueadero por hora
+        int costXMinute = costXHora / 60; //valor del parqueadero por minuto
+        long result = 0;
 
-        if (outH > inH) {
-            if (outM >= inM) {
-                result = (outH - outH) * 60 + (outM - inM);
-                if (result <= 60) {
-                    return 2000;
-                } else {
-                    int recargo = (int) ((result - 60) * 8.32);
-                    int aux = (int) (recargo / 100);
-                    if (aux - recargo / 100 > 50) {
-                        return recargo + 100 + 2000;
-                    } else {
-                        return aux * 100 + 2000;
-                    }
-                }
+        if (varDaysSave == 0) {
+            if (varHoursSave <= 12) {
+                result = 10000;
             } else {
-                outH = outH - 1;
-                outM = outM + 60;
-                result = (outH - inH) * 60 + (outM - inM);
-                if (result <= 60) {
-                    return 2000;
-                } else {
-                    int recargo = (int) ((result - 60) * 8.32);
-                    int aux = (int) (recargo / 100);
-                    if (aux - recargo / 100 > 50) {
-                        return recargo + 100 + 1000;
-                    } else {
-                        return aux * 100 + 2000;
-                    }
-                }
+                result = 15000;
             }
-
         } else {
-            if (outH == inH) {
-                if (outM > inM) {
-                    return 2000;
-                }
-            }
+            result = (varDaysSave * 15000) + (varHoursSave * costXHora) + (varMinutesSave * costXMinute);
         }
-        return 0;
+        //En el siguiente condicional se redondea la tarifa
+        if (result % 100 != 0) {
+            result = (result + 100) - (result % 100);
+        }
+        
+        /* Sortear
+        if(Sortear(result)){
+            return 0;
+        }*/
+        return result;
+    }
+
+    /**
+     * Método que sortea por un aleatorio el derecho al parking gratis por el perido de tiempo que esté el vehículo
+     * @param result costo del parqueo al retirar el vehículo
+     * @return True si el módulo del parametro result modulo el numero aletorio es igual a cero, False de lo contrario
+     */
+    private boolean Sortear(long result) {
+        int numeroAleatorio = (int) (Math.random() * (1000 - 1)) + 1;
+        long sorteo = result % numeroAleatorio;
+        
+        if (sorteo == 0) {
+            return true;
+        }
+        return false;
     }
 }

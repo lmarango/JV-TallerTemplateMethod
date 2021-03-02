@@ -6,8 +6,8 @@
 package co.edu.unicauca.parkinglot.domain;
 
 /**
- *
- * @author Usuario
+ * clase que almacena los tipos de vehículos en etiquetas
+ * @author lmarango
  */
 public enum TypeEnum {
    MOTO, CAR, TRUCK; 
